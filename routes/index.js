@@ -10,5 +10,8 @@ router.post('/register', Controller.registerPost)
 router.get('/login', Controller.login)
 router.post('/login', Controller.loginPost)
 
+// router.get('/logout', Controller.logout)
+
+
 
 module.exports = router

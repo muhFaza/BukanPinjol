@@ -12,6 +12,9 @@
         <a href="/login">Login</a> ||
         <a href="/register">Register</a>
     </div>
+    <% if (errors) { %>
+        <p style="color: red;"><%= errors %></p>
+    <% } %>
     <form action="/login" method="POST">
         <div>
             <label for="username">Username</label>

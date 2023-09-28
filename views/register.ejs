@@ -12,8 +12,8 @@
             <a href="/register">Register</a>
         </div>
         <% if (errors) { %>
-            <% errors.forEach(error => { %>
-                <p style="color: red;"><%= error %></p>
+            <% errors.forEach(el => { %>
+                <p style="color: red;"><%= el %></p>
             <% }) %>
           <% } %>
         <form action="/register" method="POST">

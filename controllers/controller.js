@@ -1,4 +1,5 @@
 const { User, Detail } = require('../models')
+const bcrypt = require('bcryptjs')
 
 class Controller {
     static landingPage(req, res) {
@@ -45,12 +46,31 @@ class Controller {
     }
 
     static login(req, res) {
-        res.render('login')
+        let errors
+        if (req.query.errors) {
+            errors = req.query.errors.split(',')
+        }
+        res.render('login', { errors })
     }
 
     static loginPost(req, res) {
-        res.send(req.body)
+        User.findOne({ where: { username: req.body.username } })
+            .then((data) => {
+                if (data) {
+                    if (bcrypt.compareSync(req.body.password, data.password)) {
+                        return res.redirect('/dashboard')
+                    } else {
+                        return res.redirect('/login?errors=Invalid username/password')
+                    }
+                } else {
+                    return res.redirect('/login?errors=Username is not found. Please register first')
+                }
+            })
+            .catch(err => {
+                res.send(err)
+            })
     }
+
 }
 
 module.exports = Controller
