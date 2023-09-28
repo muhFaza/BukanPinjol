@@ -10,10 +10,10 @@
         <nav class="navbar navbar-default">
             <div class="container-fluid">
               <div class="navbar-header">
-                <a class="navbar-brand" href="/">Bukan Pinjol</a>
+                <a class="navbar-brand" href="#">Bukan Pinjol</a>
               </div>
               <ul class="nav navbar-nav">
-                <li class="active"><a href="/">Home</a></li>
+                <li class="active"><a href="#">Home</a></li>
                 <li><a href="/login">Login</a></li>
                 <li><a href="/register">Register</a></li>
               </ul>
@@ -76,55 +76,6 @@
                 </div>
             </div>
         </div>
-        <script src="path-to-your-bootstrap-js/bootstrap.min.js">
-            // Password validation
-            // has to be at least 6 characters long
-            // has to match confirm password
-            const password = document.getElementById('password');
-            const confirmPassword = document.getElementById('confirmPassword');
-            confirmPassword.addEventListener('input', () => {
-                if (password.value.length < 6 || password.value.length > 32) {
-                    confirmPassword.setCustomValidity('Password must be 6-32 characters long');
-                } else if (confirmPassword.value !== password.value) {
-                    confirmPassword.setCustomValidity('Passwords do not match');
-                } else {
-                    confirmPassword.setCustomValidity('');
-                }
-            });
-
-            // Username validation
-            // has to be at least 3 characters long
-            // only contains alphabets and numbers
-            const username = document.getElementById('username');
-            username.addEventListener('input', () => {
-                const regex = /^[a-zA-Z0-9]+$/;
-                if (username.value.length < 3) {
-                    username.setCustomValidity('Username must be at least 3 characters long');
-                } else if (!regex.test(username.value)) {
-                    username.setCustomValidity('Username can only contain alphabets and numbers');
-                } else {
-                    username.setCustomValidity('');
-                }
-            });
-
-
-            const firstName = document.getElementById('firstName');
-            firstName.addEventListener('input', () => {
-                if (firstName.value.trim() == '') {
-                firstName.setCustomValidity('First Name cannot be empty');
-                } else {
-                firstName.setCustomValidity('');
-                }
-            });
-
-            const lastName = document.getElementById('lastName');
-            lastName.addEventListener('input', () => {
-                if (lastName.value.trim() == '') {
-                lastName.setCustomValidity('Last Name cannot be empty');
-                } else {
-                lastName.setCustomValidity('');
-                }
-            });
-        </script>
+        <script src="path-to-your-bootstrap-js/bootstrap.min.js"></script>
     </body>
 </html>

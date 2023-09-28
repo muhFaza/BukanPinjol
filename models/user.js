@@ -29,6 +29,9 @@ module.exports = (sequelize, DataTypes) => {
           args: [3, 12],
           msg: 'Username at least 3-12 characters'
         },
+        isAlphanumeric: {
+          msg: 'Username can only contain letters and numbers'
+        },
         // validate username is not already taken
         isUnique: function (value, next) {
           User.findOne({

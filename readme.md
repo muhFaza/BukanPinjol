@@ -27,3 +27,13 @@ currencyConverter.from("USD").to("GBP").amount(125).convert().then((res) => {
 Password min 6 length
 Username min 3 length
 Username only alphanumeric
+
+==================================================
+Home:
+
+- Balance
+- Account type
+- Full Name
+- Rekening (accountNo)
+- Deposit
+- Withdraw

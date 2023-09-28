@@ -58,6 +58,8 @@ class Controller {
             .then((data) => {
                 if (data) {
                     if (bcrypt.compareSync(req.body.password, data.password)) {
+                        req.session.userId = data.id
+                        req.session.admin = data.isAdmin // true/false
                         return res.redirect('/dashboard')
                     } else {
                         return res.redirect('/login?errors=Invalid username/password')
@@ -71,6 +73,28 @@ class Controller {
             })
     }
 
+    static getLogout(req, res){
+        req.session.destroy((err) => {
+            if(err) res.send(err)
+            else{
+                res.redirect('/login')
+            }
+        })
+    }
+
+    static home(req, res) {
+        User.findOne({
+            where : {id : req.session.userId},
+            include: [Detail]
+        })
+            .then(data => {
+                res.send(data)
+                // res.render('home', {data})
+            })
+            .catch(err => {
+                res.send(err)
+            })
+    }
 }
 
 module.exports = Controller
