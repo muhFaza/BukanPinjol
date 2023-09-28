@@ -6,3 +6,20 @@ type 5 : min balance 5
 
 hanya type 3-5 yang canBuyShares = true
 
+===================================================
+Cara pake package currency-converter-lt
+```
+const CC = require('currency-converter-lt')
+
+let currencyConverter = new CC({from:"USD", to:"IDR", amount:100}).convert()
+.then(res => {
+    console.log(res);
+})
+
+OR
+
+currencyConverter.from("USD").to("GBP").amount(125).convert().then((res) => {
+    console.log(res)
+})
+```
+===================================================
