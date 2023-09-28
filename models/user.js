@@ -28,6 +28,20 @@ module.exports = (sequelize, DataTypes) => {
         len: {
           args: [3, 12],
           msg: 'Username at least 3-12 characters'
+        },
+        // validate username is not already taken
+        isUnique: function (value, next) {
+          User.findOne({
+              where: {
+                username: value
+              }
+            })
+            .then((user) => {
+              if (user) {
+                return next('Username already in use!');
+              }
+              next();
+            })
         }
       }
     },
@@ -46,13 +60,17 @@ module.exports = (sequelize, DataTypes) => {
     },
     TypeId: {
       type: DataTypes.INTEGER
+    },
+    isAdmin: {
+      type: DataTypes.BOOLEAN
     }
   }, {
     hooks: {
       beforeCreate: (user, options) => {
+        console.log(user);
         user.TypeId = 1,
         user.password = bcrypt.hashSync(user.password, 10)
-        if (user.role == 1) {
+        if (user.isAdmin == 1) {
           user.isAdmin = true
         } else {
           user.isAdmin = false

@@ -6,6 +6,11 @@
         <title>Register</title>
     </head>
     <body>
+        <div>
+            <a href="/">Home</a> ||
+            <a href="/login">Login</a> ||
+            <a href="/register">Register</a>
+        </div>
         <% if (errors) { %>
             <% errors.forEach(error => { %>
                 <p style="color: red;"><%= error %></p>
@@ -38,16 +43,16 @@
             </div>
 
             <div>
-                <input type="radio" id="admin" name="role" value="1">
+                <input type="radio" id="admin" name="isAdmin" value="1">
                 <label for="admin">Admin</label>
 
-                <input checked="checked" type="radio" id="notAdmin" name="role" value="0">
+                <input checked="checked" type="radio" id="notAdmin" name="isAdmin" value="0">
                 <label for="notAdmin">Not Admin</label>
             </div>
 
             <button type="submit">Register</button>
         </form>
-        <!-- <script>
+        <script>
             // Password validation
             // has to be at least 6 characters long
             // has to match confirm password
@@ -77,6 +82,25 @@
                     username.setCustomValidity('');
                 }
             });
-        </script> -->
+
+
+            const firstName = document.getElementById('firstName');
+            firstName.addEventListener('input', () => {
+                if (firstName.value.trim() == '') {
+                firstName.setCustomValidity('First Name cannot be empty');
+                } else {
+                firstName.setCustomValidity('');
+                }
+            });
+
+            const lastName = document.getElementById('lastName');
+            lastName.addEventListener('input', () => {
+                if (lastName.value.trim() == '') {
+                lastName.setCustomValidity('Last Name cannot be empty');
+                } else {
+                lastName.setCustomValidity('');
+                }
+            });
+        </script>
     </body>
 </html>
