@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Users</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Account Number</th>
+            <th>Account Type</th>
+            <th>Balance</th>
+            <th>Actions</th>
+        </tr>
+        <% data.forEach(el => { %>
+         <tr>
+            <td><%= el.id %></td>
+            <td><%= el.username %></td>
+            <td><%= el.Detail.accountNo %></td>
+            <td><%= el.Type.typeName %></td>
+            <td><%= el.Detail.balance %></td>
+            <td>
+                <form action="/userLists/delete/<%= el.id %>" method="get">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+         </tr>
+        <% }) %>
+    </table>
+</body>
+</html>

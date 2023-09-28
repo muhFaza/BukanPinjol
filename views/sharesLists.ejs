@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Shares</title>
+</head>
+<body>
+    <h1>Hello <%= data.Detail.fullName %></h1>
+    <p>Your Account balance: <%= data.Detail.balance %></p>
+    <table style="text-align: center;" border="1">
+        <tr>
+            <th>Company Id</th>
+            <th>Company Name</th>
+            <th>Company Total Stock</th>
+            <th>Company Remaining Stock</th>
+            <th>Company Stock Price</th>
+        </tr>
+        <% sharesData.forEach(el => { %>
+         <tr>
+            <td><%= el.id %></td>
+            <td><%= el.companyName %></td>
+            <td><%= el.totalShares %></td>
+            <td><%= el.remainingShares %></td>
+            <td id="price"><%= el.price %></td>
+         </tr>
+        <% }) %>
+    </table>
+
+    <form action="/buyShares" method="POST">
+        <label for="companyId">Company ID</label>
+        <input type="number" id="companyId" name="companyId" value="1" min="1" max="<%= sharesData.length %>">
+        <label for="stockAmount">Buy Stock Amount</label>
+        <input type="number" id="stockAmount" name="stockAmount" min="1">
+        <p>Total Price: <span id="totalPrice"></span></p>
+        <button type="submit">Buy</button>
+    </form>
+    <% const pricesArr = [] %>
+    <% sharesData.forEach(el => { %>
+     <% pricesArr.push(el.price.slice(3,-3).split('.').join('')) %>
+    <% }) %>
+
+    <span id="pricesArr" style="display: none;"><%= pricesArr %></span>
+    <span id="balance" style="display: none;"><%= data.Detail.balance %></span>
+    
+<script>
+    const stockAmount = document.getElementById('stockAmount')
+    const companyId = document.getElementById('companyId')
+    const totalPrice = document.getElementById('totalPrice')
+    const pricesArr = document.getElementById('pricesArr').innerText.split(',')
+    let accountBalance = document.getElementById('balance').innerText
+        accountBalance = accountBalance.slice(3,-3).split('.').join('')
+
+    stockAmount.addEventListener('input', updateTotalPrice)
+    companyId.addEventListener('input', updateTotalPrice)
+
+    function updateTotalPrice() {
+        const companyId = +document.getElementById('companyId').value
+        const sharesPrice = pricesArr
+        const total = stockAmount.value * sharesPrice[companyId - 1]
+        totalPrice.textContent = new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR'
+    }).format(total)
+    }
+
+    stockAmount.addEventListener('input', () => {
+        const total = +totalPrice.textContent
+        if (total > accountBalance) {
+            stockAmount.setCustomValidity('You do not have enough balance!')
+        } else {
+            stockAmount.setCustomValidity('')
+        }
+        return true
+    })
+</script>
+    
+    
+</script>
+</body>
+</html>

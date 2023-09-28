@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Hello <%= userData.Detail.fullName %></h1>
+    <p>Username : <%= userData.username %></p>
+    <p>Account Number : <%= userData.Detail.accountNo %></p>
+    <p>Account Type : <%= userData.Type.typeName %></p>
+    <p>Your Account balance:</p>
+    <p>IDR: <%= userData.Detail.balance %></p>
+    <p>USD: <%= balanceUSD %></p>
+    <p>EUR: <%= balanceGBP %></p>
+    <form action="/deposit" method="get">
+        <button type="submit">Deposit</button>
+    </form>
+    <form action="/withdraw" method="get">
+        <button type="submit">Withdraw</button>
+    </form>
+    <% if (userData.Type.canBuyShares) { %>
+        <form action="/sharesLists">
+            <button type="submit">Buy Shares</button>
+        </form>
+    <% } %>
+    <% if (userData.isAdmin) { %>
+        <form action="/userLists">
+            <button type="submit">View Users as Admin</button>
+        </form>
+    <% } %>
+</body>
+</html>
