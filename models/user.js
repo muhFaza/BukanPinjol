@@ -1,4 +1,5 @@
 'use strict';
+const bcrypt = require('bcryptjs')
 const {
   Model
 } = require('sequelize');
@@ -13,14 +14,51 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       User.hasOne(models.Detail),
       User.belongsTo(models.Type)
-      User.hasMany(models.UserShare)
+      User.hasMany(models.UserShares)
     }
   }
   User.init({
-    username: DataTypes.STRING,
-    password: DataTypes.STRING,
-    TypeId: DataTypes.INTEGER
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Username cannot be empty'
+        },
+        len: {
+          args: [3, 12],
+          msg: 'Username at least 3-12 characters'
+        }
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Password cannot be empty'
+        },
+        len: {
+          args: [6, 32],
+          msg: 'Password at least 6-32 characters'
+        }
+      }
+    },
+    TypeId: {
+      type: DataTypes.INTEGER
+    }
   }, {
+    hooks: {
+      beforeCreate: (user, options) => {
+        user.TypeId = 1,
+        user.password = bcrypt.hashSync(user.password, 10)
+        if (user.role == 1) {
+          user.isAdmin = true
+        } else {
+          user.isAdmin = false
+        }
+      }
+    },
     sequelize,
     modelName: 'User',
   });

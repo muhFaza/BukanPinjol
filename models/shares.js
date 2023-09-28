@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Shares.hasMany(models.UserShare)
+      Shares.hasMany(models.UserShares)
     }
   }
   Shares.init({
