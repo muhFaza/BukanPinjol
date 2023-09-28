@@ -4,19 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     
 </head>
 <body>
-    <div>
-        <a href="/">Home</a> ||
-        <a href="/login">Login</a> ||
-        <a href="/register">Register</a>
-    </div>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">Bukan Pinjol</a>
+          </div>
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+          </ul>
+        </div>
+    </nav>
     <% if (errors) { %>
         <p style="color: red;"><%= errors %></p>
     <% } %>
+    
     <form action="/login" method="POST">
-        <div>
+        <div class="container">
+            <div class="justify-content-center">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="text-center">Login</h2>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="username" name="username" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary">Login</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div>
             <label for="username">Username</label>
             <input type="text" id="username" name="username" placeholder="Enter your username">
         </div>
@@ -24,6 +59,6 @@
             <label for="password">Password</label>
             <input type="password" id="password" name="password" placeholder="Enter your password">
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">Login</button> -->
     </form>
 </html>
