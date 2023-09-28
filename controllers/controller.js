@@ -1,4 +1,4 @@
-const { User, Detail, Type, Shares, UserShares } = require('../models')
+const { User, Detail, Type, Shares, UserShares, Log } = require('../models')
 const bcrypt = require('bcryptjs')
 const CC = require('currency-converter-lt')
 const { formatCurrencyIDR, formatCurrencyUSD, formatCurrencyGBP, decideType } = require('../helper/helper')
@@ -9,7 +9,6 @@ class Controller {
     }
 
     static register(req, res) {
-        
         let errors
         if (req.query.errors) {
             errors = req.query.errors.split(',')
@@ -56,11 +55,12 @@ class Controller {
     }
 
     static loginPost(req, res) {
-        User.findOne({ where: { username: req.body.username } })
+        User.findOne({ where: { username: req.body.username }, include: [Detail] })
             .then((data) => {
                 if (data) {
                     if (bcrypt.compareSync(req.body.password, data.password)) {
                         req.session.userId = data.id
+                        req.session.accountNo = data.Detail.accountNo
                         req.session.admin = data.isAdmin // true/false
                         return res.redirect('/home')
                     } else {
@@ -85,11 +85,16 @@ class Controller {
     }
 
     static home(req, res) {
-        let userData, balanceUSD, balanceGBP, balance
-        User.findOne({
-            where : {id : req.session.userId},
-            include: [Detail, Type]
-        })
+        let logData, userData, balanceUSD, balanceGBP, balance
+        Log.findAll({where : {UserId : req.session.userId}, include : [Shares]})
+            .then(data => {
+                // res.send(data)
+                logData = data
+                return User.findOne({
+                    where : {id : req.session.userId},
+                    include: [Detail, Type]
+                })
+            })
             .then(data => {
                 balance = data.Detail.balance
                 data.Detail.balance = formatCurrencyIDR(data.Detail.balance)
@@ -103,7 +108,7 @@ class Controller {
             .then(data => {
                 console.log(data, 'GBP');
                 balanceGBP = formatCurrencyGBP(data)
-                res.render('home', { userData, balanceUSD, balanceGBP })
+                res.render('home', { userData, balanceUSD, balanceGBP, logData })
             })
             .catch(err => {
                 res.send(err)
@@ -180,8 +185,6 @@ class Controller {
                     el.price = formatCurrencyIDR(el.price)
                 })
                 sharesData = data
-                // res.send(data)
-                // res.render('sharesLists', {data})
                 return User.findOne({ where: { id: req.session.userId }, include: [Detail] })
             })
             .then(data => {
@@ -213,7 +216,11 @@ class Controller {
         })
         .then(data => {
             let totalPrice = sharesData.price * req.body.stockAmount
-            return UserShares.create({
+            return Log.create({
+                UserId : userData.id, 
+                ShareId : sharesData.id, 
+                boughtShares : req.body.stockAmount, 
+                sharesPrice : totalPrice
             })
         })
         .then(data => {
@@ -224,6 +231,33 @@ class Controller {
             res.send(err)
         })
     }
+
+    // static transfer(req, res) {
+    //     res.render('transfer')
+    // }
+
+    // static transferPost(req, res) {
+    //     if (req.body.accountNo == req.session.accountNo) {
+    //         res.redirect('/transfer?errors=Cannot transfer to your own account')
+    //     }
+    //     Detail.findOne({ where: { accountNo: req.body.accountNo } })
+    //         .then(data => {
+    //             if (data) {
+    //                 return User.increment('balance', { by: req.body.amount, where: { id: data.UserId } })
+    //             } else {
+    //                 res.redirect('/transfer?errors=Account is not found')
+    //             }
+    //         })
+    //         .then(() => {
+    //             return User.decrement('balance', { by: req.body.amount, where: { id: req.session.userId } })
+    //         })
+    //         .then(() => {
+    //             res.redirect('/home')
+    //         })
+    //         .catch(err => {
+    //             res.send(err)
+    //         })
+    // }
 }
 
 module.exports = Controller

@@ -65,7 +65,7 @@
     }
 
     stockAmount.addEventListener('input', () => {
-        const total = +totalPrice.textContent
+        const total = totalPrice.textContent.slice(3,-3).split('.').join('')
         if (total > accountBalance) {
             stockAmount.setCustomValidity('You do not have enough balance!')
         } else {

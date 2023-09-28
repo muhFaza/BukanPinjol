@@ -3,26 +3,30 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Shares extends Model {
+  class Log extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
+    get formatDate() {
+      return this.createdAt.toDateString()
+    }
+    
     static associate(models) {
       // define association here
-      Shares.hasMany(models.UserShares)
-      Shares.hasMany(models.Log)
+      Log.belongsTo(models.User),
+      Log.belongsTo(models.Shares)
     }
   }
-  Shares.init({
-    totalShares: DataTypes.INTEGER,
-    remainingShares: DataTypes.INTEGER,
-    price: DataTypes.INTEGER,
-    companyName: DataTypes.STRING
+  Log.init({
+    UserId: DataTypes.INTEGER,
+    ShareId: DataTypes.INTEGER,
+    boughtShares: DataTypes.INTEGER,
+    sharesPrice: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Shares',
+    modelName: 'Log',
   });
-  return Shares;
+  return Log;
 };

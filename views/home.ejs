@@ -20,6 +20,9 @@
     <form action="/withdraw" method="get">
         <button type="submit">Withdraw</button>
     </form>
+    <form action="/transfer" method="get">
+        <button type="submit">Transfer</button>
+    </form>
     <% if (userData.Type.canBuyShares) { %>
         <form action="/sharesLists">
             <button type="submit">Buy Shares</button>
@@ -29,6 +32,29 @@
         <form action="/userLists">
             <button type="submit">View Users as Admin</button>
         </form>
+    <% } %>
+
+    <% if (logData) { %>
+     <table border="1">
+        <tr>
+            <th>Transaction ID</th>
+            <th>Transaction Type</th>
+            <th>Company Name</th>
+            <th>Transaction Date</th>
+            <th>Stock Bought</th>
+            <th>Total Price</th>
+        </tr>
+        <% logData.forEach(el => { %>
+        <tr>
+            <td><%= el.id %></td>
+            <td>Bought Shares</td>
+            <td><%= el.Share.companyName %></td>
+            <td><%= el.formatDate %></td>
+            <td><%= el.boughtShares %></td>
+            <td><%= el.sharesPrice %></td>
+        </tr>
+        <% }) %>
+     </table>
     <% } %>
 </body>
 </html>
