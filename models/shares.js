@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     totalShares: DataTypes.INTEGER,
     remainingShares: DataTypes.INTEGER,
     price: DataTypes.INTEGER,
-    conpanyName: DataTypes.STRING
+    companyName: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Shares',

@@ -1,0 +1,23 @@
+[
+    {
+      "typeName": "Bronze",
+      "canBuyShares": false
+    },
+    {
+      "typeName": "Silver",
+      "canBuyShares": false
+    },
+    {
+      "typeName": "Gold",
+      "canBuyShares": true
+    },
+    {
+      "typeName": "Platinum",
+      "canBuyShares": true
+    },
+    {
+      "typeName": "Diamond",
+      "canBuyShares": true
+    }
+  ]
+  

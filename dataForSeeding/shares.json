@@ -1,0 +1,33 @@
+[
+    {
+      "totalShares": 100000,
+      "remainingShares": 50000,
+      "price": 75000,
+      "companyName": "Saos ABC Corporation"
+    },
+    {
+      "totalShares": 200000,
+      "remainingShares": 150000,
+      "price": 85000,
+      "companyName": "Apple Inc."
+    },
+    {
+      "totalShares": 150000,
+      "remainingShares": 75000,
+      "price": 60000,
+      "companyName": "Tolak Angin Ltd."
+    },
+    {
+      "totalShares": 180000,
+      "remainingShares": 90000,
+      "price": 70000,
+      "companyName": "Mandiri TBK"
+    },
+    {
+      "totalShares": 250000,
+      "remainingShares": 125000,
+      "price": 95000,
+      "companyName": "Tesla Holdings"
+    }
+  ]
+  

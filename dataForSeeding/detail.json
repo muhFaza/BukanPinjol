@@ -1,0 +1,33 @@
+[
+    {
+      "accountNo": 1001,
+      "fullName": "John Doe",
+      "balance": 75000,
+      "UserId": 1
+    },
+    {
+      "accountNo": 1002,
+      "fullName": "Alice Smith",
+      "balance": 120000,
+      "UserId": 2
+    },
+    {
+      "accountNo": 1003,
+      "fullName": "Bob Johnson",
+      "balance": 1200000,
+      "UserId": 3
+    },
+    {
+      "accountNo": 1004,
+      "fullName": "Emily Davis",
+      "balance": 3500000,
+      "UserId": 4
+    },
+    {
+      "accountNo": 1005,
+      "fullName": "David Brown",
+      "balance": 8000000,
+      "UserId": 5
+    }
+  ]
+  

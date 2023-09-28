@@ -1,0 +1,33 @@
+[
+    {
+      "UserId": 1,
+      "SharesId": 1,
+      "boughtShares": 1,
+      "sharesPrice": 75000
+    },
+    {
+      "UserId": 2,
+      "SharesId": 2,
+      "boughtShares": 1,
+      "sharesPrice": 85000
+    },
+    {
+      "UserId": 3,
+      "SharesId": 3,
+      "boughtShares": 10,
+      "sharesPrice": 600000
+    },
+    {
+      "UserId": 4,
+      "SharesId": 4,
+      "boughtShares": 7,
+      "sharesPrice": 490000
+    },
+    {
+      "UserId": 5,
+      "SharesId": 5,
+      "boughtShares": 20,
+      "sharesPrice": 1900000
+    }
+  ]
+  
