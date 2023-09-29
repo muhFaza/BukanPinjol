@@ -4,57 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Hello <%= userData.Detail.fullName %></h1>
-    <p>Username : <%= userData.username %></p>
-    <p>Account Number : <%= userData.Detail.accountNo %></p>
-    <p>Account Type : <%= userData.Type.typeName %></p>
-    <p>Your Account balance:</p>
-    <p>IDR: <%= userData.Detail.balance %></p>
-    <p>USD: <%= balanceUSD %></p>
-    <p>EUR: <%= balanceGBP %></p>
-    <form action="/deposit" method="get">
-        <button type="submit">Deposit</button>
-    </form>
-    <form action="/withdraw" method="get">
-        <button type="submit">Withdraw</button>
-    </form>
-    <form action="/transfer" method="get">
-        <button type="submit">Transfer</button>
-    </form>
-    <% if (userData.Type.canBuyShares) { %>
-        <form action="/sharesLists">
-            <button type="submit">Buy Shares</button>
-        </form>
-    <% } %>
-    <% if (userData.isAdmin) { %>
-        <form action="/userLists">
-            <button type="submit">View Users as Admin</button>
-        </form>
-    <% } %>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="text-center">User Information</h2>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>fullName:</strong> <%= userData.Detail.fullName %></p>
+                        <p><strong>Username:</strong> <%= userData.username %></p>
+                        <p><strong>Account Number:</strong> <%= userData.Detail.accountNo %></p>
+                        <p><strong>Account Type:</strong> <%= userData.Type.typeName %></p>
+                        <p><strong>Your Account Balance:</strong> <br>IDR: <%= userData.Detail.balance %> <br> USD: <%= balanceUSD %> <br> EUR: <%= balanceGBP %> </p>
+                    </div>
+                </div>
+            </div>
 
-    <% if (logData) { %>
-     <table border="1">
-        <tr>
-            <th>Transaction ID</th>
-            <th>Transaction Type</th>
-            <th>Company Name</th>
-            <th>Transaction Date</th>
-            <th>Stock Bought</th>
-            <th>Total Price</th>
-        </tr>
-        <% logData.forEach(el => { %>
-        <tr>
-            <td><%= el.id %></td>
-            <td>Bought Shares</td>
-            <td><%= el.Share.companyName %></td>
-            <td><%= el.formatDate %></td>
-            <td><%= el.boughtShares %></td>
-            <td><%= el.sharesPrice %></td>
-        </tr>
-        <% }) %>
-     </table>
-    <% } %>
+            <div class="col-md-8">
+                <h2>Transaction History</h2>
+                
+                <% if (logData) { %>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Transaction ID</th>
+                                <th>Transaction Type</th>
+                                <th>Company Name</th>
+                                <th>Transaction Date</th>
+                                <th>Stock Bought</th>
+                                <th>Total Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% logData.forEach(function(transaction) { %>
+                                <tr>
+                                    <td><%= transaction.id %></td>
+                                    <td><%= transaction.transactionType %></td>
+                                    <td><%= transaction.Share.companyName %></td>
+                                    <td><%= transaction.formatDate %></td>
+                                    <td><%= transaction.boughtShares %></td>
+                                    <td>$<%= transaction.sharesPrice %></td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>   
+                <% } %>
+
+
+                <div class="mt-3">
+                    <h5>Actions</h5>
+                        <a href="/deposit" class="btn btn-success" method="get">Deposit</a>
+                        <a href="/withdraw" class="btn btn-warning" method="get">Withdraw</a>
+                        <a href="/transfer" class="btn btn-info" method="get">Transfer</a>
+                        <a href="/sharesLists" class="btn btn-primary" method="get">Buy Shares</a>
+                        <!-- kenapa ini tidak muncul Type.canBuyShares-->
+                        <% if (userData.Type.canBuyShares) { %>
+                            <form action="/sharesLists">
+                                <button type="submit" method="get" class="btn btn-primary">Buy Shares</button>
+                            </form>
+                        <% } %>
+                    <% if (userData.isAdmin) { %>
+                        <a href="/userLists" class="btn btn-danger" method="get">View Users as Admin</a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

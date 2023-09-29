@@ -232,9 +232,9 @@ class Controller {
         })
     }
 
-    // static transfer(req, res) {
-    //     res.render('transfer')
-    // }
+    static transfer(req, res) {
+        res.render('transfer')
+    }
 
     // static transferPost(req, res) {
     //     if (req.body.accountNo == req.session.accountNo) {

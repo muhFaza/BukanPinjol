@@ -35,7 +35,7 @@ router.post('/deposit', Controller.depositPost)
 router.get('/withdraw', Controller.withdraw)
 router.post('/withdraw', Controller.withdrawPost)
 
-// router.get('/transfer', Controller.transfer)
+router.get('/transfer', Controller.transfer)
 // router.post('/transfer', Controller.transferPost)
 
 router.get('/sharesLists', Controller.sharesLists)
