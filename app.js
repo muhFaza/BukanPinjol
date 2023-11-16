@@ -21,4 +21,4 @@ app.use(session({
 
 app.use('/', require('./routes/index'))
 
-app.listen(port, () => {})
+app.listen(port, () => console.log('Running in port ' + port))

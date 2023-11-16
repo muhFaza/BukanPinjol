@@ -1,4 +1,9 @@
 {
+  "name": "BukanPinjol",
+  "scripts": {
+    "start": "node app.js --watch",
+    "mon": "nodemon app.js"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "currency-converter-lt": "^2.0.0",

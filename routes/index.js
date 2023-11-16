@@ -15,7 +15,6 @@ router.post('/login', Controller.loginPost)
 
 //  untuk global
 router.use(function (req, res, next) {  // untuk id
-    console.log(req.session);
     if(!req.session.userId){
         const error = `Please login First`
         res.redirect(`/login?errors=${error}`)
@@ -42,7 +41,6 @@ router.get('/sharesLists', Controller.sharesLists)
 router.post('/buyShares', Controller.buyShares)
 
 const isAdmin = function (req, res, next) { // untuk role
-    console.log(req.session);
     if(req.session.userId && req.session.admin){
         next()
     }else{
@@ -58,7 +56,6 @@ router.get('/userLists/delete/:id', isAdmin, Controller.userListsDelete)
 //untuk satuan diletakkan setelah path dan cb
 
 // const isLoggedIn = function (req, res, next) {  // untuk id
-//     console.log(req.session);
 //     if(!req.session.userId){
 //         const error = `Please login First`
 //         res.redirect(`/login?error=${error}`)
@@ -68,7 +65,6 @@ router.get('/userLists/delete/:id', isAdmin, Controller.userListsDelete)
 // }
 
 // const isAdmin = function (req, res, next) { // untuk role
-//     console.log(req.session);
 //     if(req.session.userId && req.session.role !== 'admin'){
 //         const error = `Cant Access`
 //         res.redirect(`/login?error=${error}`)

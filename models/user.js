@@ -1,8 +1,8 @@
 'use strict';
-const bcrypt = require('bcryptjs')
 const {
   Model
 } = require('sequelize');
+const { hashPassword } = require('../helper/helper');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -71,9 +71,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     hooks: {
       beforeCreate: (user, options) => {
-        console.log(user);
         user.TypeId = 1,
-        user.password = bcrypt.hashSync(user.password, 10)
+        user.password = hashPassword(user.password)
         if (user.isAdmin == 1) {
           user.isAdmin = true
         } else {

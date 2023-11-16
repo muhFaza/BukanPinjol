@@ -1,7 +1,6 @@
 const { User, Detail, Type, Shares, UserShares, Log } = require('../models')
-const bcrypt = require('bcryptjs')
 const CC = require('currency-converter-lt')
-const { formatCurrencyIDR, formatCurrencyUSD, formatCurrencyGBP, decideType } = require('../helper/helper')
+const { formatCurrencyIDR, formatCurrencyUSD, formatCurrencyGBP, decideType, comparePassword } = require('../helper/helper')
 
 class Controller {
     static landingPage(req, res) {
@@ -36,7 +35,6 @@ class Controller {
                 res.redirect('/login')
             })
             .catch(err => {
-                console.log('masuk err');
                 if (err.name == 'SequelizeValidationError') {
                     let errors = err.errors.map(el => el.message)
                     res.redirect(`/register?errors=${errors}`)
@@ -58,7 +56,7 @@ class Controller {
         User.findOne({ where: { username: req.body.username }, include: [Detail] })
             .then((data) => {
                 if (data) {
-                    if (bcrypt.compareSync(req.body.password, data.password)) {
+                    if (comparePassword(req.body.password, data.password)) {
                         req.session.userId = data.id
                         req.session.accountNo = data.Detail.accountNo
                         req.session.admin = data.isAdmin // true/false
@@ -106,7 +104,6 @@ class Controller {
                 return new CC({from:"IDR", to:"GBP", amount:balance}).convert()
             })
             .then(data => {
-                console.log(data, 'GBP');
                 balanceGBP = formatCurrencyGBP(data)
                 res.render('home', { userData, balanceUSD, balanceGBP, logData })
             })

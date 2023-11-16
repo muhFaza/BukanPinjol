@@ -1,5 +1,6 @@
 'use strict';
-const fs = require('fs')
+const fs = require('fs');
+const { hashPassword } = require('../helper/helper');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up (queryInterface, Sequelize) {
@@ -14,6 +15,7 @@ module.exports = {
     */
     let data = JSON.parse(fs.readFileSync('./dataForSeeding/user.json', 'utf-8')).map(el => {
       el.createdAt = el.updatedAt = new Date()
+      el.password = hashPassword(el.password)
       return el
     })
     return queryInterface.bulkInsert('Users', data, {})
